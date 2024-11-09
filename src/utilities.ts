@@ -30,7 +30,7 @@ export const getCompletionModelMetadata = (
 };
 
 /**
- * Get the GitHub sessionu
+ * Get the GitHub session
  * @returns {Promise<vscode.AuthenticationSession>} The GitHub session
  */
 export const getGithubSession =
