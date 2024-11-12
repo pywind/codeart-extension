@@ -1,8 +1,9 @@
 import * as vscode from "vscode";
 import { LOCATIONS, PROVIDER_TYPES } from "../constants";
+import { events } from "../events";
 import { ILocationName, IModelType } from "../interfaces";
 import { logger } from "../logger";
-import { ModelProviderManager, ModelProviders } from "../providers";
+import { ModelProviders } from "../providers";
 import { storage } from "../storage";
 
 /**
@@ -31,22 +32,20 @@ interface IModelProviderPickUpItem extends vscode.QuickPickItem {
  * ConfigureModelCommand class manages the model configuration functionality.
  * It implements the Singleton pattern to ensure a single instance across the application.
  */
-export class ConfigureModelCommand extends vscode.Disposable {
+export class ConfigureModelCommand {
   private static instance: ConfigureModelCommand;
-  private readonly disposable: vscode.Disposable;
 
   /**
    * Private constructor to prevent direct instantiation.
    * Registers the command and initializes the disposable.
    */
-  private constructor() {
-    // Call the parent constructor
-    super(() => this.disposable.dispose());
-
+  private constructor(extensionContext = storage.getContext()) {
     // Register the command
-    this.disposable = vscode.commands.registerCommand(
-      "flexpilot.configureModel",
-      this.handler.bind(this),
+    extensionContext.subscriptions.push(
+      vscode.commands.registerCommand(
+        "flexpilot.configureModel",
+        this.handler.bind(this),
+      ),
     );
     logger.info("ConfigureModelCommand instance created");
   }
@@ -58,7 +57,6 @@ export class ConfigureModelCommand extends vscode.Disposable {
   public static register() {
     if (!ConfigureModelCommand.instance) {
       ConfigureModelCommand.instance = new ConfigureModelCommand();
-      storage().context.subscriptions.push(ConfigureModelCommand.instance);
       logger.debug("New ConfigureModelCommand instance created");
     }
   }
@@ -129,8 +127,8 @@ export class ConfigureModelCommand extends vscode.Disposable {
 
     // Add existing configurations
     let hasConfigurations = false;
-    for (const nickname of storage().models.list()) {
-      const config = storage().models.get(nickname);
+    for (const nickname of storage.models.list()) {
+      const config = storage.models.get(nickname);
       if (!config) {
         logger.warn(`No configuration found for nickname: ${nickname}`);
         continue;
@@ -199,7 +197,7 @@ export class ConfigureModelCommand extends vscode.Disposable {
     // Get the location to modify
     const locationQuickPickItems: ILocationPickUpItem[] = LOCATIONS.map(
       (location) => {
-        const preference = storage().usage.get(location.name);
+        const preference = storage.usage.get(location.name);
         return {
           providerType: location.type,
           label: location.name,
@@ -225,7 +223,7 @@ export class ConfigureModelCommand extends vscode.Disposable {
     }
 
     // Get the model to be used in the location
-    const preference = storage().usage.get(pickedLocation.label);
+    const preference = storage.usage.get(pickedLocation.label);
     const modelQuickPickItems: IModelPickUpItem[] = [
       {
         label: "Other commands",
@@ -233,8 +231,8 @@ export class ConfigureModelCommand extends vscode.Disposable {
       },
       { label: `Disable \`${pickedLocation.label}\`` },
     ];
-    for (const nickname of storage().models.list()) {
-      const config = storage().models.get(nickname);
+    for (const nickname of storage.models.list()) {
+      const config = storage.models.get(nickname);
       if (!config) {
         continue;
       }
@@ -270,12 +268,12 @@ export class ConfigureModelCommand extends vscode.Disposable {
 
     // Update the usage preference
     if (pickedModel.label === `Disable \`${pickedLocation.label}\``) {
-      await storage().usage.set(pickedLocation.label, undefined);
+      await storage.usage.set(pickedLocation.label, undefined);
       logger.notifyInfo(
         `Model usage for \`${pickedLocation.label}\` is disabled`,
       );
     } else if (pickedModel.providerId) {
-      await storage().usage.set(pickedLocation.label, {
+      await storage.usage.set(pickedLocation.label, {
         providerId: pickedModel.providerId,
         nickname: pickedModel.label,
         locationName: pickedLocation.label,
@@ -284,7 +282,11 @@ export class ConfigureModelCommand extends vscode.Disposable {
         `Model \`${pickedModel.label}\` is successfully set to be used in \`${pickedLocation.label}\``,
       );
     }
-    await ModelProviderManager.getInstance().initProviders();
+    // Reinitialize the model providers
+    events.fire({
+      name: "modelProvidersUpdated",
+      payload: { updatedAt: Date.now().toString() },
+    });
   }
 
   /**
@@ -331,8 +333,8 @@ export class ConfigureModelCommand extends vscode.Disposable {
       ignoreFocusOut: true,
       title: "Add New Provider",
       validateInput: (value) => {
-        const isDuplicate = storage()
-          .models.list()
+        const isDuplicate = storage.models
+          .list()
           .map((nickname) => nickname.trim().toLowerCase())
           .includes(value.trim().toLowerCase());
         return isDuplicate ? "Nickname already exists" : undefined;
@@ -365,7 +367,7 @@ export class ConfigureModelCommand extends vscode.Disposable {
     const locationQuickPickItems: ILocationPickUpItem[] = LOCATIONS.filter(
       (location) => location.type === selectedLocationType,
     ).map((location) => {
-      const preference = storage().usage.get(location.name);
+      const preference = storage.usage.get(location.name);
       return {
         providerType: location.type,
         label: location.name,
@@ -387,19 +389,24 @@ export class ConfigureModelCommand extends vscode.Disposable {
     );
 
     if (pickedLocations === undefined) {
-      logger.notifyError("Cancelled usage location selection");
+      logger.notifyWarn("Skipped preference selection for the model");
       return;
     }
 
     // Update the usage preferences
     for (const pickedLocation of pickedLocations) {
-      storage().usage.set(pickedLocation.label, {
+      storage.usage.set(pickedLocation.label, {
         providerId: selected.ProviderClass.providerId,
         nickname: nickname,
         locationName: pickedLocation.label,
       });
-      await ModelProviderManager.getInstance().initProviders();
     }
+
+    // Reinitialize the model providers
+    events.fire({
+      name: "modelProvidersUpdated",
+      payload: { updatedAt: Date.now().toString() },
+    });
 
     // Set the context to indicate successful configuration for walkthroughs
     await vscode.commands.executeCommand(
@@ -419,7 +426,7 @@ export class ConfigureModelCommand extends vscode.Disposable {
    */
   private async editModelConfiguration(nickname: string): Promise<void> {
     logger.info(`Starting to edit existing model configuration: ${nickname}`);
-    const config = storage().models.get(nickname);
+    const config = storage.models.get(nickname);
     if (!config) {
       logger.warn(`No configuration found for nickname: ${nickname}`);
       return;
@@ -444,7 +451,11 @@ export class ConfigureModelCommand extends vscode.Disposable {
       return;
     }
 
-    await ModelProviderManager.getInstance().initProviders();
+    // Reinitialize the model providers
+    events.fire({
+      name: "modelProvidersUpdated",
+      payload: { updatedAt: Date.now().toString() },
+    });
     logger.notifyInfo(`Updated \`${nickname}\` configuration successfully`);
   }
 
@@ -469,16 +480,19 @@ export class ConfigureModelCommand extends vscode.Disposable {
     });
     // Delete the configuration if the input matches
     if (confirmNickname === nickname) {
-      await storage().models.set(nickname);
+      await storage.models.set(nickname);
       for (const location of LOCATIONS) {
         // Remove the preference if it matches the deleted nickname
-        const preference = storage().usage.get(location.name);
+        const preference = storage.usage.get(location.name);
         if (preference?.nickname === nickname) {
-          await storage().usage.set(location.name, undefined);
+          await storage.usage.set(location.name, undefined);
         }
       }
       // Reinitialize the model providers
-      await ModelProviderManager.getInstance().initProviders();
+      events.fire({
+        name: "modelProvidersUpdated",
+        payload: { updatedAt: Date.now().toString() },
+      });
       logger.notifyInfo(`Deleted model configuration: \`${nickname}\``);
     } else {
       logger.info(

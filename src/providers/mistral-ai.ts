@@ -95,7 +95,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
   static readonly providerId = "mistral-completion";
   static readonly providerName = "Mistral AI";
   static readonly providerType = "completion" as const;
-  private readonly tokenizer: Tokenizer;
+  private tokenizer!: Tokenizer;
   public readonly config: IMistralAICompletionModelConfig;
 
   /**
@@ -109,15 +109,22 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
       `Initializing MistralAICompletionModelProvider with nickname: ${nickname}`,
     );
     const config =
-      storage().models.get<IMistralAICompletionModelConfig>(nickname);
+      storage.models.get<IMistralAICompletionModelConfig>(nickname);
     if (!config) {
       throw new Error(`Model configuration not found for ${nickname}`);
     }
     this.config = config;
-    this.tokenizer = Tokenizers.get(this.config.model);
     logger.debug(
       `MistralAICompletionModelProvider initialized for ${nickname}`,
     );
+  }
+
+  /**
+   * Initializes the OpenAI model provider.
+   * @returns {Promise<void>} A promise that resolves when the provider is initialized.
+   */
+  async initialize(): Promise<void> {
+    this.tokenizer = await Tokenizers.get(this.config.model);
   }
 
   /**
@@ -165,7 +172,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
       },
       { fetchOptions: { signal: options.signal } },
     );
-    let output = response.choices?.[0]?.message?.content ?? "";
+    let output = response.choices?.[0]?.message?.content?.toString() ?? "";
     if (options.messages.prefix.endsWith(" ")) {
       output = output.trimStart();
     }
@@ -186,7 +193,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
       `Configuring Mistral AI completion model with nickname: ${nickname}`,
     );
     const config =
-      storage().models.get<IMistralAICompletionModelConfig>(nickname);
+      storage.models.get<IMistralAICompletionModelConfig>(nickname);
 
     // Prompt user for endpoint
     const endpoint = await getEndpointInput(config?.endpoint);
@@ -283,7 +290,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
     }
 
     // Save the model configuration
-    await storage().models.set<IMistralAICompletionModelConfig>(nickname, {
+    await storage.models.set<IMistralAICompletionModelConfig>(nickname, {
       endpoint: endpoint,
       apiKey: apiKey,
       model: model,
@@ -316,7 +323,7 @@ export class MistralAIChatModelProvider extends IChatModelProvider {
     logger.info(
       `Initializing MistralAIChatModelProvider with nickname: ${nickname}`,
     );
-    const config = storage().models.get<IMistralAIChatModelConfig>(nickname);
+    const config = storage.models.get<IMistralAIChatModelConfig>(nickname);
     if (!config) {
       throw new Error(`Model configuration not found for ${nickname}`);
     }
@@ -331,7 +338,7 @@ export class MistralAIChatModelProvider extends IChatModelProvider {
    */
   static readonly configure = async (nickname: string): Promise<void> => {
     logger.info(`Configuring Mistral AI chat model with nickname: ${nickname}`);
-    const config = storage().models.get<IMistralAIChatModelConfig>(nickname);
+    const config = storage.models.get<IMistralAIChatModelConfig>(nickname);
 
     // Prompt user for endpoint
     const endpoint = await getEndpointInput(config?.endpoint);
@@ -415,7 +422,7 @@ export class MistralAIChatModelProvider extends IChatModelProvider {
     );
 
     // Save the model configuration
-    await storage().models.set<IMistralAIChatModelConfig>(nickname, {
+    await storage.models.set<IMistralAIChatModelConfig>(nickname, {
       endpoint: endpoint,
       apiKey: apiKey,
       model: model,

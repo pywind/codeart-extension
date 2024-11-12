@@ -3,70 +3,81 @@ import { logger } from "./logger";
 import { storage } from "./storage";
 
 /**
- * EventsManager class to handle VSCode extension events and actions.
- * This class follows the Singleton pattern to ensure only one instance exists throughout the application lifecycle.
+ * IEventPayload represents the payload of an event.
  */
-class EventsManager extends vscode.Disposable {
-  private static instance: EventsManager;
-  private readonly disposables: vscode.Disposable[] = [];
-  private lastTerminalExecutedCommand:
-    | vscode.TerminalExecutedCommand
-    | undefined;
-
-  /**
-   * Creates a new instance of EventsManager.
-   */
-  private constructor() {
-    // Call the parent constructor
-    super(() => this.disposables.forEach((disposable) => disposable.dispose()));
-    // Initialize all event listeners
-    this.initializeEventListeners();
-  }
-
-  /**
-   * Gets the last terminal execution details.
-   */
-  public getLastTerminalExecutedCommand() {
-    return this.lastTerminalExecutedCommand;
-  }
-
-  /**
-   * Gets the singleton instance of EventsManager.
-   * @returns {EventsManager} The singleton instance.
-   */
-  public static getInstance(): EventsManager {
-    if (!EventsManager.instance) {
-      // Create a new instance if not already created
-      EventsManager.instance = new EventsManager();
-      storage().context.subscriptions.push(EventsManager.instance);
-      logger.debug("New EventsManager instance created");
-    }
-    return EventsManager.instance;
-  }
-
-  /**
-   * Initializes all event listeners.
-   */
-  private initializeEventListeners(): void {
-    this.disposables.push(
-      vscode.window.onDidExecuteTerminalCommand(
-        (event: vscode.TerminalExecutedCommand) => {
-          logger.debug(`Terminal command executed: ${event.commandLine}`);
-          this.lastTerminalExecutedCommand = event;
-        },
-      ),
-    );
-    logger.info("Event listeners registered successfully");
-  }
-
-  /**
-   * Disposes of all registered event listeners.
-   */
-  public dispose(): void {
-    this.disposables.forEach((disposable) => disposable.dispose());
-    logger.info("All event listeners disposed successfully");
-  }
+interface IEventPayload {
+  name: "modelProvidersUpdated" | "inlineCompletionProviderUpdated";
+  payload: Record<string, unknown>;
 }
 
-// Export the EventsManager instance
-export const eventsManager = () => EventsManager.getInstance();
+/**
+ * EVENT_KEY_PREFIX is the prefix used for event keys in the storage.
+ */
+const EVENT_KEY_PREFIX = "window.events.";
+
+/**
+ * EventsSingleton is a singleton class that allows for the firing and listening of events.
+ * For local events, consider using the built-in VS Code event system.
+ * This class is used to fire events across multiple open VS Code windows.
+ */
+export class EventsSingleton {
+  private static instance: EventsSingleton;
+  private readonly eventEmitter = new vscode.EventEmitter<IEventPayload>();
+
+  /**
+   * Creates a new instance of EventsSingleton.
+   */
+  private constructor(
+    private readonly extensionContext = storage.getContext(),
+  ) {
+    // Listen for changes in the secrets storage to fire events
+    extensionContext.subscriptions.push(
+      extensionContext.secrets.onDidChange(async (event) => {
+        if (event.key.startsWith(EVENT_KEY_PREFIX)) {
+          logger.debug(`Event received: ${event.key}`);
+          const payload = await extensionContext.secrets.get(event.key);
+          if (payload) {
+            logger.debug(`Event payload: ${JSON.stringify(payload)}`);
+            this.eventEmitter.fire(JSON.parse(payload));
+          } else {
+            logger.debug(`Event payload empty, skipped firing`);
+          }
+        }
+      }),
+    );
+  }
+
+  /**
+   * Returns the singleton instance of EventsSingleton.
+   * @returns {EventsSingleton} The singleton instance.
+   */
+  public static getInstance(): EventsSingleton {
+    if (!EventsSingleton.instance) {
+      EventsSingleton.instance = new EventsSingleton();
+      logger.info("EventsSingleton instance created");
+    }
+    return EventsSingleton.instance;
+  }
+
+  /**
+   * Fires an event with the given payload.
+   * @param {IEventPayload} event - The event to fire.
+   */
+  public async fire(event: IEventPayload) {
+    logger.debug(
+      `Firing event: ${event.name} with payload: ${JSON.stringify(event.payload)}`,
+    );
+    await this.extensionContext.secrets.store(
+      `${EVENT_KEY_PREFIX}${event.name}`,
+      JSON.stringify(event),
+    );
+  }
+
+  /**
+   * Event that is fired when an event is emitted.
+   */
+  public onFire = this.eventEmitter.event;
+}
+
+// Export a singleton instance of the events
+export const events = EventsSingleton.getInstance();
