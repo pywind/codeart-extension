@@ -139,7 +139,10 @@ class InlineCompletionProvider implements vscode.InlineCompletionItemProvider {
 
     // Limit the number of tokens for prompt
     const promptTokenLimit =
-      provider.config.contextWindow - this.maxOutputTokens;
+      Math.min(
+        storage.workspace.get<number>("flexpilot.completions.maxTokenUsage"),
+        provider.config.contextWindow,
+      ) - this.maxOutputTokens;
 
     // Get the prefix for prompt
     let prefixRange = new vscode.Range(0, 0, position.line, 0);
@@ -188,7 +191,8 @@ class InlineCompletionProvider implements vscode.InlineCompletionItemProvider {
           "flexpilot.completions.contextPrefixWeight",
         ) * promptTokenLimit,
       ) - headerTokens.length;
-    const maxSuffixLength = promptTokenLimit - maxPrefixLength;
+    const maxSuffixLength =
+      promptTokenLimit - maxPrefixLength - headerTokens.length;
     if (
       prefixTokens.length > maxPrefixLength &&
       suffixTokens.length > maxSuffixLength
