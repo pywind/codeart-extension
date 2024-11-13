@@ -12,19 +12,19 @@ export const PROVIDER_TYPES = ["chat", "completion"] as const;
 export const ALLOWED_COMPLETION_MODELS = [
   {
     regex: "^gpt-3.5-turbo-.*instruct",
-    contextWindow: 3500,
+    contextWindow: 4000,
     tokenizerUrl:
       "https://cdn.jsdelivr.net/gh/flexpilot-ai/vscode-extension/tokenizers/cl100k_base.json",
   },
   {
     regex: "^codestral-(?!.*mamba)",
-    contextWindow: 30000,
+    contextWindow: 31500,
     tokenizerUrl:
       "https://cdn.jsdelivr.net/gh/flexpilot-ai/vscode-extension/tokenizers/codestral-v0.1.json",
   },
   {
     regex: "^gpt-35-turbo-.*instruct",
-    contextWindow: 3500,
+    contextWindow: 4000,
     tokenizerUrl:
       "https://cdn.jsdelivr.net/gh/flexpilot-ai/vscode-extension/tokenizers/cl100k_base.json",
   },

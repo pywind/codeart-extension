@@ -3,7 +3,7 @@
   "name": "flexpilot-vscode-extension",
   "displayName": "Flexpilot",
   "description": "Open-Source, Native and a True GitHub Copilot Alternative for VS Code",
-  "version": "1.95.1",
+  "version": "1.95.2",
   "icon": "assets/logo.png",
   "license": "GPL-3.0-only",
   "pricing": "Free",
@@ -157,6 +157,13 @@
           "minimum": 0,
           "default": 0.1,
           "description": "The randomness of completions, with 0.0 being deterministic and 1.0 being random."
+        },
+        "flexpilot.completions.maxTokenUsage": {
+          "type": "number",
+          "maximum": 128000,
+          "minimum": 500,
+          "default": 4000,
+          "description": "Maximum number of tokens (prompt + output) allowed for generating completions. This will help control the usage cost."
         },
         "flexpilot.panelChat.temperature": {
           "type": "number",
