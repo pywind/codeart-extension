@@ -81,9 +81,11 @@ export class SessionManager extends vscode.Disposable {
    * Handles changes in authentication sessions.
    */
   public async handleSessionChange(): Promise<void> {
-    const session = await vscode.authentication.getSession("github", [
-      "public_repo",
-    ]);
+    const session = await vscode.authentication.getSession(
+      "github",
+      ["public_repo", "user:email"],
+      { createIfNone: false },
+    );
     await this.checkNewlyInstalled();
     storage.session.set(session);
     setContext("isLoggedIn", !!session);

@@ -55,9 +55,11 @@ export class GithubSignInCommand {
         await storage.set("github.support", shouldSupport);
       }
 
-      await vscode.authentication.getSession("github", ["public_repo"], {
-        createIfNone: true,
-      });
+      await vscode.authentication.getSession(
+        "github",
+        ["public_repo", "user:email"],
+        { createIfNone: true },
+      );
 
       // Set the context to indicate successful sign-in for walkthroughs
       await vscode.commands.executeCommand(

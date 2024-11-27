@@ -1,3 +1,4 @@
+import * as vscode from "vscode";
 import { CommitMessageCommand } from "./commands/commit-message";
 import { ConfigureModelCommand } from "./commands/configure-model";
 import { GithubSignInCommand } from "./commands/github-sign-in";
@@ -45,6 +46,9 @@ export const activate = async () => {
 
     // Set the loaded context
     setContext("isLoaded", true);
+
+    // Open chat view on startup
+    vscode.commands.executeCommand("workbench.action.chat.open");
   } catch (error) {
     // Set the error context
     setContext("isError", true);
