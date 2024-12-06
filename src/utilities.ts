@@ -44,22 +44,6 @@ export const isFileExists = async (fileUri: vscode.Uri): Promise<boolean> => {
 };
 
 /**
- * Get the GitHub session
- * @returns {Promise<vscode.AuthenticationSession>} The GitHub session
- */
-export const getGithubSession =
-  async (): Promise<vscode.AuthenticationSession> => {
-    logger.debug("Getting GitHub session");
-    const session = await vscode.authentication.getSession("github", []);
-    if (session) {
-      logger.debug("GitHub session found");
-      return session;
-    }
-    logger.notifyError("GitHub session not found");
-    throw new Error("GitHub session not found");
-  };
-
-/**
  * Get the terminal type from the terminal object
  * @param {vscode.Terminal} terminal - The terminal object
  * @returns {string} The type of terminal
