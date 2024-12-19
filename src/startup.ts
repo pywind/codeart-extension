@@ -259,6 +259,15 @@ const isArgvJsonOutdated = async () => {
 export const updateRuntimeArguments = async () => {
   // Initialize the flag to require a restart
   let requireRestart = false;
+  let restartMessage =
+    "Flexpilot: Please restart VS Code to apply the latest updates";
+
+  // Hide the chat setup if it is visible
+  try {
+    await vscode.commands.executeCommand("workbench.action.chat.hideSetup");
+  } catch (error) {
+    logger.warn(`Chat setup not found: ${String(error)}`);
+  }
 
   // Check if the argv.json file is outdated
   if (await isArgvJsonOutdated()) {
@@ -278,15 +287,18 @@ export const updateRuntimeArguments = async () => {
     requireRestart = true;
   }
 
+  // Check if GitHub Copilot is active
+  if (isGitHubCopilotActive()) {
+    logger.warn("GitHub Copilot is active, restart required");
+    restartMessage =
+      "Flexpilot: To ensure Flexpilot functions correctly, kindly disable `GitHub Copilot` and Restart";
+  }
+
   // Notify the user about the required restart
   if (requireRestart) {
     // Show a notification to restart VS Code
     vscode.window
-      .showInformationMessage(
-        "Flexpilot: Please restart VS Code to apply the latest updates",
-        "Restart",
-        "View Logs",
-      )
+      .showInformationMessage(restartMessage, "Restart", "View Logs")
       .then((selection) => {
         if (selection === "Restart") {
           triggerVscodeRestart();
@@ -297,30 +309,6 @@ export const updateRuntimeArguments = async () => {
 
     // Throw an error to stop the execution
     throw new Error("Flexpilot: VS Code restart required");
-  }
-
-  // Check if GitHub Copilot is active
-  if (isGitHubCopilotActive()) {
-    logger.warn("GitHub Copilot is active");
-    // Notify the user about GitHub Copilot compatibility
-    vscode.window
-      .showWarningMessage(
-        "To ensure Flexpilot functions correctly, kindly disable GitHub Copilot and reload the window",
-        "Reload Window",
-        "View Logs",
-      )
-      .then((selection) => {
-        if (selection === "Reload Window") {
-          vscode.commands.executeCommand("workbench.action.reloadWindow");
-        } else if (selection === "View Logs") {
-          logger.showOutputChannel();
-        }
-      });
-
-    // Throw an error to stop the execution
-    throw new Error(
-      "Flexpilot: GitHub Copilot is active and needs to be disabled",
-    );
   }
 
   // Log the successful activation
