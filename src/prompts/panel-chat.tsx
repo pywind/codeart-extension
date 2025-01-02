@@ -26,25 +26,23 @@ export class PanelChatPrompt {
       } else {
         // Check if the response has metadata
         if (item.result.metadata?.response?.length) {
-          logger.debug("Parsing chat response from metadata");
-          return jsxToCoreMessage(
-            <Message role="assistant">
-              {item.result.metadata?.response?.trim() || "Empty Response"}
-            </Message>,
-          );
+          return {
+            role: "assistant",
+            content: item.result.metadata.response?.trim() || "Empty Response",
+          };
         }
         // Check if the response has a `response` property
         logger.debug("Parsing chat response from response");
-        return jsxToCoreMessage(
-          <Message role="assistant">
-            {item.response
+        return {
+          role: "assistant",
+          content:
+            item.response
               .map((x) =>
                 x.value instanceof vscode.MarkdownString ? x.value.value : "",
               )
               .join("\n\n")
-              .trim() || "Empty Response"}
-          </Message>,
-        );
+              .trim() || "Empty Response",
+        };
       }
     });
   }
