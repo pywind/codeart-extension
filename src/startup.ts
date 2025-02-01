@@ -262,20 +262,12 @@ export const updateRuntimeArguments = async () => {
   let restartMessage =
     "Flexpilot: Please restart VS Code to apply the latest updates";
 
-  // Hide the chat setup if it is visible
-  try {
-    const chatExpConfig =
-      vscode.workspace.getConfiguration("chat.experimental");
-    if (chatExpConfig && chatExpConfig.get("offerSetup") != false) {
-      chatExpConfig.update(
-        "offerSetup",
-        false,
-        vscode.ConfigurationTarget.Global,
-      );
-    }
-  } catch (error) {
-    logger.warn(`Chat setup not found: ${String(error)}`);
-  }
+  // Update `chat.commandCenter.enabled` to always true
+  vscode.workspace.onDidChangeConfiguration(() => {
+    vscode.workspace
+      .getConfiguration("chat.commandCenter")
+      .update("enabled", true, vscode.ConfigurationTarget.Global);
+  });
 
   // Check if the argv.json file is outdated
   if (await isArgvJsonOutdated()) {

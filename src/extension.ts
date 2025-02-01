@@ -44,6 +44,23 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     });
 
+  // Show message to user to hide the default copilot signup page
+  if (!context.globalState.get("hideWarningMessage")) {
+    vscode.window
+      .showWarningMessage(
+        "If you see a Copilot signup page in the chat panel by default, please click the 'Hide Copilot' button to dismiss it.",
+        "Hide Default Copilot Sign Up",
+        "Don't Show Again",
+      )
+      .then((selection) => {
+        if (selection === "Don't Show Again") {
+          context.globalState.update("hideWarningMessage", true);
+        } else if (selection === "Hide Default Copilot Sign Up") {
+          vscode.commands.executeCommand("workbench.action.chat.hideSetup");
+        }
+      });
+  }
+
   // lazy load the extension
   await (await import("./lazy-load.js")).activate();
 }
