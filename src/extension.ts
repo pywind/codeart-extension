@@ -28,6 +28,22 @@ export async function activate(context: vscode.ExtensionContext) {
   // Register the logger with the context
   context.subscriptions.push(logger);
 
+  // Show a warning message to users
+  vscode.window
+    .showWarningMessage(
+      "Flexpilot VS Code extension is no longer actively maintained; switch to Flexpilot IDE, a VS Code fork with better performance, multi-file editing, a web client, and more features. We will still try to address issues and pull requests, but we won't be adding new features to this extension.",
+      "Download Flexpilot IDE",
+    )
+    .then((selection) => {
+      if (selection === "Download Flexpilot IDE") {
+        vscode.env.openExternal(
+          vscode.Uri.parse(
+            "https://flexpilot.ai/docs/getting-started#downloading-the-ide",
+          ),
+        );
+      }
+    });
+
   // lazy load the extension
   await (await import("./lazy-load.js")).activate();
 }

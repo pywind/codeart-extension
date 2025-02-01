@@ -2,6 +2,15 @@
 
 > _"Open-Source, Native and a True GitHub Copilot Alternative for VS Code"_
 
+> [!WARNING]  
+> The **Flexpilot VS Code extension** is no longer actively maintained. We will still try to address any issues or pull requests, but will not be adding new features.
+>
+> We have created `Flexpilot IDE` as its successor - a fork of VS Code with the Flexpilot extension pre-installed, along with powerful new features such as multi-file editing, an online web IDE, and more.
+>
+> 🚀 Click [here](https://ide.flexpilot.ai/?folder=web-fs://github/flexpilot-ai/flexpilot-ide/main) to experience it instantly Online.
+>
+> 📥 Click [here](https://flexpilot.ai/docs/getting-started#downloading-the-ide) to download the latest version of Flexpilot Desktop IDE for the best experience.
+
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/flexpilot-ai/vscode-extension/build.yml)
 [![License](https://img.shields.io/badge/license-GNU%20GPLv3-blue.svg)](LICENSE)
 ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/flexpilot.flexpilot-vscode-extension)
@@ -29,55 +38,55 @@ Flexpilot is your gateway to truly flexible AI-powered development. Unlike other
 
 Effortlessly code with **AI-powered autocomplete** that provides context-aware suggestions and natural language guidance tailored to your project.
 
-![Inline Completions](https://docs.flexpilot.ai/videos/inline-completion-dark.gif)
+![Inline Completions](./assets/readme/inline-completion-dark.gif)
 
 ### 💬 Panel Chat
 
 Experience **context-aware, interactive AI conversations** directly within your VSCode workspace. Flexpilot’s panel chat keeps you focused on problem-solving without ever leaving your codebase.
 
-![Panel Chat](https://docs.flexpilot.ai/videos/panel-chat-dark.gif)
+![Panel Chat](./assets/readme/panel-chat-dark.gif)
 
 ### ✍️ Inline Chat
 
 Refactor, debug, or gain instant clarity with **Inline Chat**. Whether you need error handling suggestions or code explanations, Flexpilot’s inline chat feature lets you make changes directly in your editor.
 
-![Inline Chat](https://docs.flexpilot.ai/videos/inline-chat-dark.gif)
+![Inline Chat](./assets/readme/inline-chat-dark.gif)
 
 ### ⚡ Quick Chat
 
 Stay in the zone with **Quick Chat** – instant answers from your AI assistant with a single shortcut. No more breaking your workflow to find answers; just quick solutions at your fingertips.
 
-![Quick Chat](https://docs.flexpilot.ai/videos/quick-chat-dark.gif)
+![Quick Chat](./assets/readme/quick-chat-dark.gif)
 
 ### 🎯 Smart Variables
 
 Get precision in your AI interactions with **Smart Variables**. Flexpilot references elements from your code and editor data, allowing for more tailored and relevant assistance.
 
-![Smart Variables](https://docs.flexpilot.ai/videos/panel-chat-dark.gif)
+![Smart Variables](./assets/readme/panel-chat-dark.gif)
 
 ### 🎙️ Voice Chat
 
 Have a question? Just ask! **Voice Chat** enables you to speak directly to your AI assistant and receive code suggestions in real time, allowing you to stay hands-free while coding.
 
-![Voice Chat](https://docs.flexpilot.ai/videos/voice-chat-dark.gif)
+![Voice Chat](./assets/readme/voice-chat-dark.gif)
 
 ### 📄 Dynamic Chat Titles
 
 Maintain clarity in your AI-assisted conversations with **Dynamic Chat Titles**. Flexpilot automatically generates concise, relevant titles for each chat, making it easy to revisit previous conversations.
 
-![Dynamic Chat Titles](https://docs.flexpilot.ai/videos/chat-title-dark.gif)
+![Dynamic Chat Titles](./assets/readme/chat-title-dark.gif)
 
 ### 💻 Commit Messages
 
 Simplify your workflow with **AI-generated commit messages** and PR descriptions. Flexpilot crafts detailed and context-aware commit messages to make your code contributions clearer and more descriptive.
 
-![Commit Messages](https://docs.flexpilot.ai/videos/commit-message-dark.gif)
+![Commit Messages](./assets/readme/commit-message-dark.gif)
 
 ### 📊 Token Usage Insights
 
 Gain transparency with **Token Usage Insights**. Track real-time token consumption across all AI interactions, helping you manage your usage and costs more effectively.
 
-![Token Usage Insights](https://docs.flexpilot.ai/videos/token-usage-dark.gif)
+![Token Usage Insights](./assets/readme/token-usage-dark.gif)
 
 ## 🎯 Supported AI Providers
 
