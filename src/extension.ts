@@ -2,6 +2,9 @@ import * as vscode from "vscode";
 import { logger } from "./logger";
 import { storage } from "./storage";
 
+// Export version from package.json
+export const VERSION = "2.0.0";
+
 /**
  * Activates the extension.
  */
@@ -31,15 +34,13 @@ export async function activate(context: vscode.ExtensionContext) {
   // Show a warning message to users
   vscode.window
     .showWarningMessage(
-      "Flexpilot VS Code extension is no longer actively maintained; switch to Flexpilot IDE, a VS Code fork with better performance, multi-file editing, a web client, and more features. We will still try to address issues and pull requests, but we won't be adding new features to this extension.",
-      "Download Flexpilot IDE",
+      "CodeArt VS Code extension is a community fork with enhanced features and better customization. We're committed to maintaining and improving this extension.",
+      "Learn More",
     )
     .then((selection) => {
-      if (selection === "Download Flexpilot IDE") {
+      if (selection === "Learn More") {
         vscode.env.openExternal(
-          vscode.Uri.parse(
-            "https://flexpilot.ai/docs/getting-started#downloading-the-ide",
-          ),
+          vscode.Uri.parse("https://github.com/pywind/codeart-extension"),
         );
       }
     });

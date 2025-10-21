@@ -1,6 +1,10 @@
 {
-  "search.exclude": { "out": true },
-  "files.exclude": { "out": false },
+  "search.exclude": {
+    "out": true
+  },
+  "files.exclude": {
+    "out": false
+  },
   "typescript.tsc.autoDetect": "off",
   "prettier.prettierPath": "./node_modules/prettier",
   "editor.formatOnSave": true,
@@ -32,9 +36,9 @@
     }
   },
   "cSpell.words": [
+    "codeart",
     "Codestral",
     "davinci",
-    "flexpilot",
     "Groq",
     "groqcloud",
     "ISCM",

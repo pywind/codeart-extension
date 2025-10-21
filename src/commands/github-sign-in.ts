@@ -17,7 +17,7 @@ export class GithubSignInCommand {
     // Register the command
     extensionContext.subscriptions.push(
       vscode.commands.registerCommand(
-        "flexpilot.github.signin",
+        "codeart.github.signin",
         this.handler.bind(this),
       ),
     );
@@ -64,7 +64,7 @@ export class GithubSignInCommand {
       // Set the context to indicate successful sign-in for walkthroughs
       await vscode.commands.executeCommand(
         "setContext",
-        "flexpilot:walkthroughSignin",
+        "codeart:walkthroughSignin",
         true,
       );
 
@@ -81,7 +81,7 @@ export class GithubSignInCommand {
    */
   private async promptForGithubSupport(): Promise<boolean> {
     const selectedOption = await vscode.window.showInformationMessage(
-      "Flexpilot: Support Us!",
+      "CodeArt: Support Us!",
       {
         modal: true,
         detail:

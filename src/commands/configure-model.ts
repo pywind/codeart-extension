@@ -43,7 +43,7 @@ export class ConfigureModelCommand {
     // Register the command
     extensionContext.subscriptions.push(
       vscode.commands.registerCommand(
-        "flexpilot.configureModel",
+        "codeart.configureModel",
         this.handler.bind(this),
       ),
     );
@@ -177,7 +177,7 @@ export class ConfigureModelCommand {
     // Create the quick pick
     const quickPick = vscode.window.createQuickPick();
     quickPick.items = quickPickItems;
-    quickPick.title = "Flexpilot: Configure the Language Model Provider";
+    quickPick.title = "CodeArt: Configure the Language Model Provider";
     quickPick.ignoreFocusOut = true;
     quickPick.canSelectMany = false;
     quickPick.placeholder = hasConfigurations
@@ -211,7 +211,7 @@ export class ConfigureModelCommand {
     const pickedLocation = await vscode.window.showQuickPick(
       locationQuickPickItems,
       {
-        title: "Flexpilot: Modify Model Usage Preferences",
+        title: "CodeArt: Modify Model Usage Preferences",
         ignoreFocusOut: true,
         canPickMany: false,
         placeHolder: "Select the usage location",
@@ -256,7 +256,7 @@ export class ConfigureModelCommand {
       });
     }
     const pickedModel = await vscode.window.showQuickPick(modelQuickPickItems, {
-      title: "Flexpilot: Modify Model Usage Preferences",
+      title: "CodeArt: Modify Model Usage Preferences",
       ignoreFocusOut: true,
       canPickMany: false,
       placeHolder: `Select the model config to be used in \`${pickedLocation.label}\``,
@@ -381,7 +381,7 @@ export class ConfigureModelCommand {
     const pickedLocations = await vscode.window.showQuickPick(
       locationQuickPickItems,
       {
-        title: "Flexpilot: Configure Model Usage",
+        title: "CodeArt: Configure Model Usage",
         ignoreFocusOut: true,
         canPickMany: true,
         placeHolder: "Select the locations where this model will be used",
@@ -411,7 +411,7 @@ export class ConfigureModelCommand {
     // Set the context to indicate successful configuration for walkthroughs
     await vscode.commands.executeCommand(
       "setContext",
-      "flexpilot:walkthroughConfigureModel",
+      "codeart:walkthroughConfigureModel",
       true,
     );
 
@@ -468,7 +468,7 @@ export class ConfigureModelCommand {
       `Initiating delete confirmation for configuration: ${nickname}`,
     );
     const confirmNickname = await vscode.window.showInputBox({
-      title: "Flexpilot: Delete language model provider",
+      title: "CodeArt: Delete language model provider",
       ignoreFocusOut: true,
       prompt: "Enter nickname here to confirm",
       validateInput(value) {

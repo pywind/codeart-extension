@@ -28,7 +28,7 @@ export class ProxyModelProvider {
         family: "proxy",
         name: "proxy",
         isDefault: true,
-        vendor: "flexpilot",
+        vendor: "codeart",
         version: "1.0.0",
         maxOutputTokens: 10000,
       },

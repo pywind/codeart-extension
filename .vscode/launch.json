@@ -13,11 +13,11 @@
         "${workspaceFolder}/launch_folder",
         "--extensionDevelopmentPath=${workspaceFolder}",
         "--disable-extensions",
-        "--enable-proposed-api=flexpilot.flexpilot-vscode-extension"
+        "--enable-proposed-api=pywind.codeart-vscode-extension"
       ],
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "env": {
-        "FLEXPILOT_DEV_MODE": "true"
+        "CODEART_DEV_MODE": "true"
       },
       "preLaunchTask": "${defaultBuildTask}"
     }

@@ -58,11 +58,11 @@ class StatusIconManager {
   private initializeStatusBar(): void {
     logger.debug("Initializing status bar");
     this.statusBarItem.accessibilityInformation = {
-      label: "Flexpilot Status",
+      label: "CodeArt Status",
     };
-    this.statusBarItem.tooltip = "Flexpilot Status";
-    this.statusBarItem.name = "Flexpilot Status";
-    this.statusBarItem.command = "flexpilot.status.icon.menu";
+    this.statusBarItem.tooltip = "CodeArt Status";
+    this.statusBarItem.name = "CodeArt Status";
+    this.statusBarItem.command = "codeart.status.icon.menu";
     this.statusBarItem.show();
     logger.debug("Status bar initialized");
   }
@@ -100,10 +100,10 @@ class StatusIconManager {
     // Update the status bar icon
     if (isCompletionsEnabled) {
       this.state = "enabled";
-      this.statusBarItem.text = "$(flexpilot-default)";
+      this.statusBarItem.text = "$(codeart-default)";
     } else {
       this.state = "disabled";
-      this.statusBarItem.text = "$(flexpilot-disabled)";
+      this.statusBarItem.text = "$(codeart-disabled)";
     }
   }
 
@@ -113,9 +113,9 @@ class StatusIconManager {
   public reset(): void {
     logger.debug("Resetting status bar");
     if (this.state === "disabled") {
-      this.statusBarItem.text = "$(flexpilot-disabled)";
+      this.statusBarItem.text = "$(codeart-disabled)";
     } else {
-      this.statusBarItem.text = "$(flexpilot-default)";
+      this.statusBarItem.text = "$(codeart-default)";
     }
   }
 

@@ -57,7 +57,7 @@ export class PanelChatPrompt {
     return jsxToCoreMessage(
       <Message role="system">
         <ul>
-          <li>You are an AI programming assistant named "Flexpilot"</li>
+          <li>You are an AI programming assistant named "CodeArt"</li>
           <li>Follow the user's requirements carefully & to the letter.</li>
           <li>Avoid content that violates copyrights.</li>
           <li>
@@ -159,13 +159,13 @@ export class PanelChatPrompt {
         <p>Available Commands:</p>
         <ul>
           <li>
-            <a href="command:flexpilot.configureModel">
+            <a href="command:codeart.configureModel">
               Configure the Language Model Provider
             </a>
           </li>
           <li>
-            <a href="command:flexpilot.viewLogs">
-              View logs from Flexpilot output channel
+            <a href="command:codeart.viewLogs">
+              View logs from CodeArt output channel
             </a>
           </li>
         </ul>
@@ -210,8 +210,8 @@ export class PanelChatPrompt {
           <a href="command:inlineChat.start">starting an inline chat session</a>
         </p>
         <p>
-          Learn more about Flexpilot from our official docs{" "}
-          <a href="https://docs.flexpilot.ai">here</a>
+          Learn more about CodeArt from our official docs{" "}
+          <a href="https://github.com/pywind/codeart-extension">here</a>
         </p>
       </Message>,
     );

@@ -18,7 +18,7 @@ interface IGenericChatModelConfig extends IModelConfig {
  * Default help prompt for Generic configuration.
  */
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/generic.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * Generic Chat Model Provider class
@@ -69,7 +69,7 @@ export class GenericChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: `e.g., http://localhost:11434/v1`,
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter your base URL",
+      title: "CodeArt: Enter your base URL",
     });
 
     if (baseUrl === undefined) {
@@ -82,7 +82,7 @@ export class GenericChatModelProvider extends IChatModelProvider {
     logger.debug("Prompting user for API key");
 
     let apiKey = await vscode.window.showInputBox({
-      title: "Flexpilot: Enter your API key",
+      title: "CodeArt: Enter your API key",
       ignoreFocusOut: true,
       value: config?.apiKey ?? "",
       validateInput: (value) =>
@@ -118,12 +118,12 @@ export class GenericChatModelProvider extends IChatModelProvider {
       model = await vscode.window.showQuickPick(modelsList, {
         placeHolder: "Select a chat model",
         ignoreFocusOut: true,
-        title: "Flexpilot: Select the chat model",
+        title: "CodeArt: Select the chat model",
       });
     } else {
       // Prompt user to manually enter model ID
       model = await vscode.window.showInputBox({
-        title: "Flexpilot: Enter your model name",
+        title: "CodeArt: Enter your model name",
         ignoreFocusOut: true,
         value: config?.model ?? "",
         validateInput: (value) =>
@@ -144,7 +144,7 @@ export class GenericChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {

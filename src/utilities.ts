@@ -11,7 +11,7 @@ import { logger } from "./logger";
  * @returns {Promise<void>} The promise
  */
 export const setContext = async (key: string, value: boolean) => {
-  await vscode.commands.executeCommand("setContext", `flexpilot:${key}`, value);
+  await vscode.commands.executeCommand("setContext", `codeart:${key}`, value);
   logger.debug(`Set context: ${key} = ${value}`);
 };
 

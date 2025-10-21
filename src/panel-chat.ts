@@ -8,7 +8,7 @@ import { storage } from "./storage";
 import { VariablesManager } from "./variables";
 
 /**
- * PanelChatParticipant class provides functionality for the panel chat feature in the Flexpilot.
+ * PanelChatParticipant class provides functionality for the panel chat feature in the CodeArt.
  * It implements the Singleton pattern to ensure a single instance across the application.
  */
 class PanelChatParticipant {
@@ -26,7 +26,7 @@ class PanelChatParticipant {
 
     // Create the chat participant
     this.chatParticipant = vscode.chat.createChatParticipant(
-      "flexpilot.panel.default",
+      "codeart.panel.default",
       this.handleChatRequest.bind(this),
     );
 
@@ -49,7 +49,7 @@ class PanelChatParticipant {
     // Configure help text prefix
     this.chatParticipant.helpTextPrefix = PanelChatPrompt.getHelpTextPrefix();
     this.chatParticipant.helpTextPrefix.isTrusted = {
-      enabledCommands: ["flexpilot.configureModel", "flexpilot.viewLogs"],
+      enabledCommands: ["codeart.configureModel", "codeart.viewLogs"],
     };
 
     // Configure help text postfix
@@ -59,7 +59,7 @@ class PanelChatParticipant {
     };
 
     // Set chat participant icon
-    this.chatParticipant.iconPath = new vscode.ThemeIcon("flexpilot-default");
+    this.chatParticipant.iconPath = new vscode.ThemeIcon("codeart-default");
 
     // Set up requester information
     this.chatParticipant.requester = {
@@ -122,7 +122,7 @@ class PanelChatParticipant {
       if (!provider) {
         response.markdown("Click below button to configure model");
         response.button({
-          command: "flexpilot.configureModel",
+          command: "codeart.configureModel",
           title: "Configure Model",
         });
         return {
@@ -159,7 +159,7 @@ class PanelChatParticipant {
         abortSignal: abortController.signal,
         stopSequences: [],
         temperature: storage.workspace.get<number>(
-          "flexpilot.panelChat.temperature",
+          "codeart.panelChat.temperature",
         ),
       });
 
@@ -173,7 +173,7 @@ class PanelChatParticipant {
       }
 
       // Check if token usage is enabled and show usage
-      if (storage.workspace.get("flexpilot.panelChat.showTokenUsage")) {
+      if (storage.workspace.get("codeart.panelChat.showTokenUsage")) {
         const usage = await stream.usage;
         if (usage.completionTokens && usage.promptTokens) {
           response.warning(
@@ -185,7 +185,7 @@ class PanelChatParticipant {
       // Set the context to indicate chat for walkthroughs
       await vscode.commands.executeCommand(
         "setContext",
-        "flexpilot:walkthroughPanelChat",
+        "codeart:walkthroughPanelChat",
         true,
       );
 
@@ -217,8 +217,8 @@ class PanelChatParticipant {
    */
   private async provideWelcomeMessage(): Promise<vscode.ChatWelcomeMessageContent> {
     return {
-      icon: new vscode.ThemeIcon("flexpilot-default"),
-      title: "Ask Flexpilot",
+      icon: new vscode.ThemeIcon("codeart-default"),
+      title: "Ask CodeArt",
       message: PanelChatPrompt.getWelcomeMessage(
         this.githubSession.account.label,
       ),
@@ -237,7 +237,7 @@ class PanelChatParticipant {
   ): Promise<vscode.ChatFollowup[]> {
     return location === vscode.ChatLocation.Panel &&
       !token.isCancellationRequested
-      ? [{ prompt: "/help - Get help with Flexpilot commands" }]
+      ? [{ prompt: "/help - Get help with CodeArt commands" }]
       : [];
   }
 
@@ -286,7 +286,7 @@ class PanelChatParticipant {
         abortSignal: abortController.signal,
         stopSequences: [],
         temperature: storage.workspace.get<number>(
-          "flexpilot.chatTitle.temperature",
+          "codeart.chatTitle.temperature",
         ),
       });
 
@@ -351,7 +351,7 @@ class PanelChatParticipant {
         abortSignal: abortController.signal,
         stopSequences: [],
         temperature: storage.workspace.get<number>(
-          "flexpilot.chatSuggestions.temperature",
+          "codeart.chatSuggestions.temperature",
         ),
       });
 

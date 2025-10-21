@@ -1,15 +1,15 @@
 {
-  "publisher": "flexpilot",
-  "name": "flexpilot-vscode-extension",
-  "displayName": "Flexpilot",
+  "publisher": "pywind",
+  "name": "codeart-vscode-extension",
+  "displayName": "CodeArt",
   "description": "Open-Source, Native and a True GitHub Copilot Alternative for VS Code",
-  "version": "1.97.0",
+  "version": "2.0.0",
   "icon": "assets/logo.png",
   "license": "GPL-3.0-only",
   "pricing": "Free",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flexpilot-ai/vscode-extension"
+    "url": "https://github.com/pywind/codeart-extension"
   },
   "categories": [
     "AI",
@@ -21,7 +21,7 @@
     "Machine Learning"
   ],
   "keywords": [
-    "flexpilot",
+    "codeart",
     "free",
     "open",
     "open-source",
@@ -92,42 +92,42 @@
   "contributes": {
     "walkthroughs": [
       {
-        "id": "Flexpilot",
-        "title": "Flexpilot AI",
-        "description": "This is a walkthrough for getting started with Flexpilot.",
+        "id": "CodeArt",
+        "title": "CodeArt AI",
+        "description": "This is a walkthrough for getting started with CodeArt.",
         "icon": "assets/logo.png",
         "steps": [
           {
             "id": "signin",
             "title": "GitHub Sign In",
-            "description": "Sign in with GitHub to use Flexpilot, your AI pair programmer.\n[Sign In](command:flexpilot.github.signin)",
+            "description": "Sign in with GitHub to use CodeArt, your AI pair programmer.\n[Sign In](command:codeart.github.signin)",
             "media": {
               "markdown": "assets/walkthrough.md"
             },
             "completionEvents": [
-              "onContext:flexpilot:walkthroughSignin"
+              "onContext:codeart:walkthroughSignin"
             ]
           },
           {
             "id": "configureModel",
             "title": "Configure Model",
-            "description": "Configure the language model provider for Flexpilot.\n[Configure](command:flexpilot.configureModel)",
+            "description": "Configure the language model provider for CodeArt.\n[Configure](command:codeart.configureModel)",
             "media": {
               "markdown": "assets/walkthrough.md"
             },
             "completionEvents": [
-              "onContext:flexpilot:walkthroughConfigureModel"
+              "onContext:codeart:walkthroughConfigureModel"
             ]
           },
           {
             "id": "panelChat",
             "title": "Start Chatting",
-            "description": "Chat with Flexpilot in the panel chat view with the configured model.\n[Start Chat](command:workbench.action.chat.open?%7B%22query%22%3A%22What%20model%20do%20you%20use%3F%22%7D)",
+            "description": "Chat with CodeArt in the panel chat view with the configured model.\n[Start Chat](command:workbench.action.chat.open?%7B%22query%22%3A%22What%20model%20do%20you%20use%3F%22%7D)",
             "media": {
               "markdown": "assets/walkthrough.md"
             },
             "completionEvents": [
-              "onContext:flexpilot:walkthroughPanelChat"
+              "onContext:codeart:walkthroughPanelChat"
             ]
           }
         ]
@@ -136,74 +136,74 @@
     "menus": {},
     "configuration": {
       "type": "object",
-      "title": "Flexpilot",
+      "title": "CodeArt",
       "properties": {
-        "flexpilot.completions.debounceWait": {
+        "codeart.completions.debounceWait": {
           "type": "number",
           "minimum": 10,
           "default": 100,
           "description": "The time in milliseconds to wait before triggering a completion."
         },
-        "flexpilot.completions.contextPrefixWeight": {
+        "codeart.completions.contextPrefixWeight": {
           "type": "number",
           "maximum": 0.95,
           "minimum": 0.05,
           "default": 0.85,
           "description": "The proportion of prefix to suffix tokens in the context for completions."
         },
-        "flexpilot.completions.temperature": {
+        "codeart.completions.temperature": {
           "type": "number",
           "maximum": 1,
           "minimum": 0,
           "default": 0.1,
           "description": "The randomness of completions, with 0.0 being deterministic and 1.0 being random."
         },
-        "flexpilot.completions.maxTokenUsage": {
+        "codeart.completions.maxTokenUsage": {
           "type": "number",
           "maximum": 128000,
           "minimum": 500,
           "default": 4000,
           "description": "Maximum number of tokens (prompt + output) allowed for generating completions. This will help control the usage cost."
         },
-        "flexpilot.panelChat.temperature": {
+        "codeart.panelChat.temperature": {
           "type": "number",
           "maximum": 1,
           "minimum": 0,
           "default": 0.1,
           "description": "The randomness of panel chat, with 0.0 being deterministic and 1.0 being random."
         },
-        "flexpilot.panelChat.showTokenUsage": {
+        "codeart.panelChat.showTokenUsage": {
           "type": "boolean",
           "default": true,
           "description": "Whether to show token usage in panel chat."
         },
-        "flexpilot.inlineChat.temperature": {
+        "codeart.inlineChat.temperature": {
           "type": "number",
           "maximum": 1,
           "minimum": 0,
           "default": 0.1,
           "description": "The randomness of inline chat, with 0.0 being deterministic and 1.0 being random."
         },
-        "flexpilot.inlineChat.showTokenUsage": {
+        "codeart.inlineChat.showTokenUsage": {
           "type": "boolean",
           "default": true,
           "description": "Whether to show token usage in inline chat."
         },
-        "flexpilot.chatSuggestions.temperature": {
+        "codeart.chatSuggestions.temperature": {
           "type": "number",
           "maximum": 1,
           "minimum": 0,
           "default": 0.1,
           "description": "The randomness of chat suggestions, with 0.0 being deterministic and 1.0 being random."
         },
-        "flexpilot.chatTitle.temperature": {
+        "codeart.chatTitle.temperature": {
           "type": "number",
           "maximum": 1,
           "minimum": 0,
           "default": 0.1,
           "description": "The randomness of chat title, with 0.0 being deterministic and 1.0 being random."
         },
-        "flexpilot.gitCommitMessage.temperature": {
+        "codeart.gitCommitMessage.temperature": {
           "type": "number",
           "maximum": 1,
           "minimum": 0,
@@ -214,20 +214,20 @@
     },
     "chatParticipants": [
       {
-        "id": "flexpilot.panel.default",
-        "name": "flexpilot",
-        "fullName": "Flexpilot",
-        "description": "Ask Flexpilot or type / for commands",
+        "id": "codeart.panel.default",
+        "name": "codeart",
+        "fullName": "CodeArt",
+        "description": "Ask CodeArt or type / for commands",
         "isDefault": true,
         "locations": [
           "panel"
         ]
       },
       {
-        "id": "flexpilot.editor.default",
-        "name": "flexpilot",
-        "fullName": "Flexpilot",
-        "description": "Ask Flexpilot or type / for commands",
+        "id": "codeart.editor.default",
+        "name": "codeart",
+        "fullName": "CodeArt",
+        "description": "Ask CodeArt or type / for commands",
         "isDefault": true,
         "locations": [
           "editor"
@@ -241,59 +241,59 @@
     "viewsWelcome": [
       {
         "view": "workbench.panel.chat.view.copilot",
-        "contents": "Failed to activate Flexpilot. Please check the logs for more information.\n[View Logs](command:flexpilot.viewLogs)",
-        "when": "flexpilot:isError"
+        "contents": "Failed to activate CodeArt. Please check the logs for more information.\n[View Logs](command:codeart.viewLogs)",
+        "when": "codeart:isError"
       },
       {
         "view": "workbench.panel.chat.view.copilot",
-        "contents": "$(loading~spin) Please wait while Flexpilot is getting activated",
-        "when": "!flexpilot:isError && !flexpilot:isLoaded"
+        "contents": "$(loading~spin) Please wait while CodeArt is getting activated",
+        "when": "!codeart:isError && !codeart:isLoaded"
       },
       {
         "view": "workbench.panel.chat.view.copilot",
-        "contents": "Sign in with GitHub to use Flexpilot, your AI pair programmer.\n[Sign In](command:flexpilot.github.signin)",
-        "when": "!flexpilot:isError && flexpilot:isLoaded && !flexpilot:isLoggedIn"
+        "contents": "Sign in with GitHub to use CodeArt, your AI pair programmer.\n[Sign In](command:codeart.github.signin)",
+        "when": "!codeart:isError && codeart:isLoaded && !codeart:isLoggedIn"
       }
     ],
     "commands": [
       {
-        "command": "flexpilot.git.generateCommitMessage",
+        "command": "codeart.git.generateCommitMessage",
         "title": "Generate Commit Message",
         "icon": "$(sparkle)",
         "enablement": "false",
-        "category": "Flexpilot"
+        "category": "CodeArt"
       },
       {
-        "command": "flexpilot.github.signin",
+        "command": "codeart.github.signin",
         "title": "Sign In with GitHub"
       },
       {
-        "command": "flexpilot.configureModel",
+        "command": "codeart.configureModel",
         "title": "Configure the Language Model Provider",
-        "category": "Flexpilot",
-        "enablement": "flexpilot:isLoggedIn"
+        "category": "CodeArt",
+        "enablement": "codeart:isLoggedIn"
       },
       {
-        "command": "flexpilot.viewLogs",
-        "category": "Flexpilot",
-        "title": "View logs from Flexpilot output channel"
+        "command": "codeart.viewLogs",
+        "category": "CodeArt",
+        "title": "View logs from CodeArt output channel"
       },
       {
-        "command": "flexpilot.status.icon.menu",
+        "command": "codeart.status.icon.menu",
         "enablement": "false",
         "title": "Status Icon Menu"
       }
     ],
     "icons": {
-      "flexpilot-default": {
-        "description": "Flexpilot Default Logo",
+      "codeart-default": {
+        "description": "CodeArt Default Logo",
         "default": {
           "fontPath": "assets/fonts.woff",
           "fontCharacter": "\\e900"
         }
       },
-      "flexpilot-disabled": {
-        "description": "Flexpilot Disabled Logo",
+      "codeart-disabled": {
+        "description": "CodeArt Disabled Logo",
         "default": {
           "fontPath": "assets/fonts.woff",
           "fontCharacter": "\\e901"
@@ -302,7 +302,7 @@
     },
     "iconFonts": [
       {
-        "id": "flexpilot-font",
+        "id": "codeart-font",
         "src": [
           {
             "path": "assets/fonts.woff",
@@ -349,5 +349,142 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "enabledApiProposalsOriginal": [
+    "activeComment",
+    "aiRelatedInformation",
+    "aiTextSearchProvider",
+    "authLearnMore",
+    "authSession",
+    "canonicalUriProvider",
+    "chatEditing",
+    "chatParticipantAdditions",
+    "chatParticipantPrivate",
+    "chatProvider",
+    "chatReadonlyPromptReference",
+    "chatReferenceBinaryData",
+    "chatTab",
+    "chatVariableResolver",
+    "codeActionAI",
+    "codeActionRanges",
+    "codiconDecoration",
+    "commentReactor",
+    "commentReveal",
+    "commentThreadApplicability",
+    "commentingRangeHint",
+    "commentsDraftState",
+    "contribAccessibilityHelpContent",
+    "contribCommentEditorActionsMenu",
+    "contribCommentPeekContext",
+    "contribCommentThreadAdditionalMenu",
+    "contribCommentsViewThreadMenus",
+    "contribDebugCreateConfiguration",
+    "contribDiffEditorGutterToolBarMenus",
+    "contribEditSessions",
+    "contribEditorContentMenu",
+    "contribLabelFormatterWorkspaceTooltip",
+    "contribMenuBarHome",
+    "contribMergeEditorMenus",
+    "contribMultiDiffEditorMenus",
+    "contribNotebookStaticPreloads",
+    "contribRemoteHelp",
+    "contribShareMenu",
+    "contribSourceControlHistoryItemMenu",
+    "contribSourceControlHistoryTitleMenu",
+    "contribSourceControlInputBoxMenu",
+    "contribSourceControlTitleMenu",
+    "contribStatusBarItems",
+    "contribViewContainerTitle",
+    "contribViewsRemote",
+    "contribViewsWelcome",
+    "createFileSystemWatcher",
+    "customEditorMove",
+    "debugVisualization",
+    "defaultChatParticipant",
+    "diffCommand",
+    "diffContentOptions",
+    "documentFiltersExclusive",
+    "editSessionIdentityProvider",
+    "editorHoverVerbosityLevel",
+    "editorInsets",
+    "embeddings",
+    "extensionRuntime",
+    "extensionsAny",
+    "externalUriOpener",
+    "fileSearchProvider",
+    "fileSearchProvider2",
+    "findFiles2",
+    "findTextInFiles",
+    "findTextInFiles2",
+    "fsChunks",
+    "idToken",
+    "inlineCompletionsAdditions",
+    "inlineEdit",
+    "interactive",
+    "interactiveWindow",
+    "ipc",
+    "languageModelSystem",
+    "languageStatusText",
+    "mappedEditsProvider",
+    "multiDocumentHighlightProvider",
+    "nativeWindowHandle",
+    "newSymbolNamesProvider",
+    "notebookCellExecution",
+    "notebookCellExecutionState",
+    "notebookControllerAffinityHidden",
+    "notebookDeprecated",
+    "notebookExecution",
+    "notebookKernelSource",
+    "notebookLiveShare",
+    "notebookMessaging",
+    "notebookMime",
+    "notebookReplDocument",
+    "notebookVariableProvider",
+    "portsAttributes",
+    "profileContentHandlers",
+    "quickDiffProvider",
+    "quickInputButtonLocation",
+    "quickPickItemTooltip",
+    "quickPickSortByLabel",
+    "resolvers",
+    "scmActionButton",
+    "scmHistoryProvider",
+    "scmMultiDiffEditor",
+    "scmSelectedProvider",
+    "scmTextDocument",
+    "scmValidation",
+    "shareProvider",
+    "speech",
+    "statusBarItemTooltip",
+    "tabInputMultiDiff",
+    "tabInputTextMerge",
+    "taskPresentationGroup",
+    "telemetry",
+    "terminalCompletionProvider",
+    "terminalDataWriteEvent",
+    "terminalDimensions",
+    "terminalExecuteCommandEvent",
+    "terminalQuickFixProvider",
+    "terminalSelection",
+    "terminalShellEnv",
+    "terminalShellType",
+    "testObserver",
+    "testRelatedCode",
+    "textEditorDiffInformation",
+    "textSearchComplete2",
+    "textSearchProvider",
+    "textSearchProvider2",
+    "timeline",
+    "tokenInformation",
+    "treeViewActiveItem",
+    "treeViewMarkdownMessage",
+    "treeViewReveal",
+    "tunnelFactory",
+    "tunnels",
+    "valueSelectionInQuickPick",
+    "workspaceTrust"
+  ],
+  "engines": {
+    "vscode": "1.97.x"
   }
 }

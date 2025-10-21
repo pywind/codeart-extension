@@ -47,10 +47,10 @@ jobs:
         run: npm run package -- --target ${{ matrix.platform }}
 
       - name: Package extension
-        run: npx vsce package --target ${{ matrix.platform }} --out "flexpilot-${{ matrix.platform }}.vsix"
+        run: npx vsce package --target ${{ matrix.platform }} --out "codeart-${{ matrix.platform }}.vsix"
 
       - name: Upload extension vsix as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "flexpilot-${{ matrix.platform }}.vsix"
-          path: "flexpilot-${{ matrix.platform }}.vsix"
+          name: "codeart-${{ matrix.platform }}.vsix"
+          path: "codeart-${{ matrix.platform }}.vsix"

@@ -54,7 +54,7 @@ const isProposedApiDisabled = async () => {
     return false;
   } catch (error) {
     logger.error(error as Error);
-    logger.error("Proposed API disabled for Flexpilot");
+    logger.error("Proposed API disabled for CodeArt");
     return true;
   }
 };
@@ -104,7 +104,7 @@ const isPackageJsonOutdated = async () => {
     packageJson.contributes.menus["scm/inputBox"] = [
       {
         when: "scmProvider == git",
-        command: "flexpilot.git.generateCommitMessage",
+        command: "codeart.git.generateCommitMessage",
       },
     ];
 
@@ -125,7 +125,7 @@ const isPackageJsonOutdated = async () => {
   if (loadedPackageJson.contributes.languageModels === undefined) {
     // Add the "languageModels" section to the "contributes" section
     packageJson.contributes.languageModels = {
-      vendor: "flexpilot",
+      vendor: "codeart",
     };
 
     // Set flag to update the package.json file
@@ -260,7 +260,7 @@ export const updateRuntimeArguments = async () => {
   // Initialize the flag to require a restart
   let requireRestart = false;
   let restartMessage =
-    "Flexpilot: Please restart VS Code to apply the latest updates";
+    "CodeArt: Please restart VS Code to apply the latest updates";
 
   // Update `chat.commandCenter.enabled` to always true
   vscode.workspace.onDidChangeConfiguration(() => {
@@ -291,7 +291,7 @@ export const updateRuntimeArguments = async () => {
   if (isGitHubCopilotActive()) {
     logger.warn("GitHub Copilot is active, restart required");
     restartMessage =
-      "Flexpilot: To ensure Flexpilot functions correctly, kindly disable `GitHub Copilot` and Restart";
+      "CodeArt: To ensure CodeArt functions correctly, kindly disable `GitHub Copilot` and Restart";
   }
 
   // Notify the user about the required restart
@@ -308,7 +308,7 @@ export const updateRuntimeArguments = async () => {
       });
 
     // Throw an error to stop the execution
-    throw new Error("Flexpilot: VS Code restart required");
+    throw new Error("CodeArt: VS Code restart required");
   }
 
   // Log the successful activation

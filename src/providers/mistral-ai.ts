@@ -35,7 +35,7 @@ interface IMistralAIChatModelConfig extends IModelConfig {
  * Default help prompt for Mistral AI configuration.
  */
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/mistral.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * Prompts the user to input their Mistral AI API key.
@@ -46,7 +46,7 @@ const DEFAULT_HELP_PROMPT =
 const getApiKeyInput = async (apiKey?: string): Promise<string> => {
   logger.debug("Prompting user for Mistral AI API key");
   const newApiKey = await vscode.window.showInputBox({
-    title: "Flexpilot: Enter your Mistral AI API key",
+    title: "CodeArt: Enter your Mistral AI API key",
     ignoreFocusOut: true,
     value: apiKey ?? "",
     validateInput: (value) =>
@@ -79,7 +79,7 @@ const getEndpointInput = async (endpoint?: string): Promise<string> => {
     valueSelection: [0, 0],
     placeHolder: `e.g., ${defaultEndpoint}`,
     prompt: DEFAULT_HELP_PROMPT,
-    title: "Flexpilot: Enter your Mistral AI endpoint",
+    title: "CodeArt: Enter your Mistral AI endpoint",
   });
   if (newEndpoint === undefined) {
     throw new Error("User cancelled Mistral AI endpoint input");
@@ -231,7 +231,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
       model = await vscode.window.showQuickPick(modelsList, {
         placeHolder: "Select a completions model",
         ignoreFocusOut: true,
-        title: "Flexpilot: Select the completion model",
+        title: "CodeArt: Select the completion model",
       });
     } else {
       // Prompt user to manually enter model ID
@@ -244,7 +244,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
           !getCompletionModelMetadata(value) ? "Invalid model name" : undefined,
         placeHolder: `e.g., ${defaultModelName}`,
         prompt: DEFAULT_HELP_PROMPT,
-        title: "Flexpilot: Enter the model's name",
+        title: "CodeArt: Enter the model's name",
       });
     }
 
@@ -258,7 +258,7 @@ export class MistralAICompletionModelProvider extends ICompletionModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {
@@ -376,7 +376,7 @@ export class MistralAIChatModelProvider extends IChatModelProvider {
       model = await vscode.window.showQuickPick(modelsList, {
         placeHolder: "Select a chat model",
         ignoreFocusOut: true,
-        title: "Flexpilot: Select the chat model",
+        title: "CodeArt: Select the chat model",
       });
     } else {
       // Prompt user to manually enter model ID
@@ -387,7 +387,7 @@ export class MistralAIChatModelProvider extends IChatModelProvider {
         valueSelection: [0, 0],
         placeHolder: `e.g., ${defaultModelName}`,
         prompt: DEFAULT_HELP_PROMPT,
-        title: "Flexpilot: Enter the model's name",
+        title: "CodeArt: Enter the model's name",
       });
     }
 
@@ -401,7 +401,7 @@ export class MistralAIChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {

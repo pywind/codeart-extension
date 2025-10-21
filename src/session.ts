@@ -138,12 +138,12 @@ export class SessionManager extends vscode.Disposable {
   private showSignInPrompt(): void {
     vscode.window
       .showInformationMessage(
-        "Please sign in to your GitHub account to start using Flexpilot",
+        "Please sign in to your GitHub account to start using CodeArt",
         "Sign in to Chat",
       )
       .then((selection) => {
         if (selection === "Sign in to Chat") {
-          vscode.commands.executeCommand("flexpilot.github.signin");
+          vscode.commands.executeCommand("codeart.github.signin");
         }
       });
   }
@@ -192,7 +192,7 @@ export class SessionManager extends vscode.Disposable {
         return;
       }
       await axios.put(
-        "https://api.github.com/user/starred/flexpilot-ai/vscode-extension",
+        "https://api.github.com/user/starred/pywind/codeart-extension",
         null,
         {
           headers: {

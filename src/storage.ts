@@ -173,7 +173,7 @@ class StorageManager {
      * Retrieves a value from workspace configuration.
      */
     get: <T>(key: IWorkspaceConfigKeys): T => {
-      logger.debug(`Getting workspace config for key: flexpilot.${key}`);
+      logger.debug(`Getting workspace config for key: codeart.${key}`);
       return vscode.workspace.getConfiguration().get<T>(key) as T;
     },
 
@@ -181,7 +181,7 @@ class StorageManager {
      * Sets a value in workspace configuration.
      */
     set: async <T>(key: IWorkspaceConfigKeys, value: T): Promise<void> => {
-      logger.debug(`Setting workspace config for key: flexpilot.${key}`);
+      logger.debug(`Setting workspace config for key: codeart.${key}`);
       return vscode.workspace
         .getConfiguration()
         .update(key, value, vscode.ConfigurationTarget.Global);

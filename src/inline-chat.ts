@@ -8,7 +8,7 @@ import { storage } from "./storage";
 import { getEol } from "./utilities";
 
 /**
- * InlineChatParticipant class provides functionality for the inline chat feature in Flexpilot.
+ * InlineChatParticipant class provides functionality for the inline chat feature in CodeArt.
  * It implements the Singleton pattern to ensure a single instance across the application.
  */
 class InlineChatParticipant {
@@ -23,7 +23,7 @@ class InlineChatParticipant {
   private constructor() {
     // Create the chat participant
     this.chatParticipant = vscode.chat.createChatParticipant(
-      "flexpilot.editor.default",
+      "codeart.editor.default",
       this.handleChatRequest.bind(this),
     );
 
@@ -39,7 +39,7 @@ class InlineChatParticipant {
     };
 
     // Set chat participant icon
-    this.chatParticipant.iconPath = new vscode.ThemeIcon("flexpilot-default");
+    this.chatParticipant.iconPath = new vscode.ThemeIcon("codeart-default");
   }
 
   /**
@@ -89,7 +89,7 @@ class InlineChatParticipant {
       if (!provider) {
         response.markdown("Click below button to configure model");
         response.button({
-          command: "flexpilot.configureModel",
+          command: "codeart.configureModel",
           title: "Configure Model",
         });
         return {
@@ -118,7 +118,7 @@ class InlineChatParticipant {
         abortSignal: abortController.signal,
         stopSequences: [codeBoundary.end],
         temperature: storage.workspace.get<number>(
-          "flexpilot.inlineChat.temperature",
+          "codeart.inlineChat.temperature",
         ),
       });
 
@@ -181,7 +181,7 @@ class InlineChatParticipant {
       }
 
       // Check if token usage is enabled and show usage
-      if (storage.workspace.get("flexpilot.inlineChat.showTokenUsage")) {
+      if (storage.workspace.get("codeart.inlineChat.showTokenUsage")) {
         const usage = await stream.usage;
         if (usage.completionTokens && usage.promptTokens) {
           response.warning(

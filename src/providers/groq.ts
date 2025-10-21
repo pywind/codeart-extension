@@ -27,7 +27,7 @@ interface IGroqCloudModel {
  * Default help prompt for GroqCloud API key configuration
  */
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/groq.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * GroqCloud Chat Model Provider class
@@ -74,7 +74,7 @@ export class GroqCloudChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: "e.g., gsk_vgAcnlKOXdklg2AWLUv...", // cspell:disable-line
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter your GroqCloud API key",
+      title: "CodeArt: Enter your GroqCloud API key",
     });
     if (apiKey === undefined) {
       throw new Error("User cancelled API key input");
@@ -89,7 +89,7 @@ export class GroqCloudChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: `e.g., ${defaultBaseUrl}`,
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter the base URL for GroqCloud API",
+      title: "CodeArt: Enter the base URL for GroqCloud API",
     });
     if (baseUrl === undefined) {
       throw new Error("User cancelled base URL input");
@@ -100,7 +100,7 @@ export class GroqCloudChatModelProvider extends IChatModelProvider {
     const response = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: true,
       },
       async (progress) => {
@@ -130,7 +130,7 @@ export class GroqCloudChatModelProvider extends IChatModelProvider {
     const model = await vscode.window.showQuickPick(modelPickUpItems, {
       placeHolder: "Select a chat model",
       ignoreFocusOut: true,
-      title: "Flexpilot: Select the GroqCloud model",
+      title: "CodeArt: Select the GroqCloud model",
     });
     if (model === undefined) {
       throw new Error("User cancelled model selection");
@@ -140,7 +140,7 @@ export class GroqCloudChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {

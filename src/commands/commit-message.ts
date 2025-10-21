@@ -22,7 +22,7 @@ export class CommitMessageCommand {
     // Register the command
     extensionContext.subscriptions.push(
       vscode.commands.registerCommand(
-        "flexpilot.git.generateCommitMessage",
+        "codeart.git.generateCommitMessage",
         this.handler.bind(this),
       ),
     );
@@ -105,7 +105,7 @@ export class CommitMessageCommand {
             abortSignal: abortController.signal,
             stopSequences: [],
             temperature: storage.workspace.get<number>(
-              "flexpilot.gitCommitMessage.temperature",
+              "codeart.gitCommitMessage.temperature",
             ),
           });
 

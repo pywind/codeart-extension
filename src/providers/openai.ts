@@ -39,7 +39,7 @@ interface IOpenAICompletionModelConfig extends ICompletionModelConfig {
  * Default help prompt for OpenAI configuration.
  */
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/openai.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * Prompts the user to input their OpenAI API key.
@@ -50,7 +50,7 @@ const DEFAULT_HELP_PROMPT =
 const getApiKeyInput = async (apiKey?: string): Promise<string> => {
   logger.debug("Prompting user for OpenAI API key");
   const newApiKey = await vscode.window.showInputBox({
-    title: "Flexpilot: Enter your OpenAI API key",
+    title: "CodeArt: Enter your OpenAI API key",
     ignoreFocusOut: true,
     value: apiKey ?? "",
     validateInput: (value) =>
@@ -83,7 +83,7 @@ const getBaseUrlInput = async (baseUrl?: string): Promise<string> => {
     valueSelection: [0, 0],
     placeHolder: `e.g., ${defaultBaseUrl}`,
     prompt: DEFAULT_HELP_PROMPT,
-    title: "Flexpilot: Enter your OpenAI base URL",
+    title: "CodeArt: Enter your OpenAI base URL",
   });
   if (newBaseUrl === undefined) {
     throw new Error("User cancelled OpenAI base URL input");
@@ -103,7 +103,7 @@ const getOrganizationInput = async (
 ): Promise<string | undefined> => {
   logger.debug("Prompting user for OpenAI organization");
   const newOrganization = await vscode.window.showInputBox({
-    title: "Flexpilot: Enter your OpenAI organization",
+    title: "CodeArt: Enter your OpenAI organization",
     ignoreFocusOut: true,
     value: organization ?? "",
     valueSelection: [0, 0],
@@ -128,7 +128,7 @@ const getProjectInput = async (
 ): Promise<string | undefined> => {
   logger.debug("Prompting user for OpenAI project");
   const newProject = await vscode.window.showInputBox({
-    title: "Flexpilot: Enter your OpenAI project",
+    title: "CodeArt: Enter your OpenAI project",
     ignoreFocusOut: true,
     value: project ?? "",
     valueSelection: [0, 0],
@@ -226,7 +226,7 @@ export class OpenAICompletionModelProvider extends ICompletionModelProvider {
     const modelsList = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: true,
       },
       async (progress) => {
@@ -264,7 +264,7 @@ export class OpenAICompletionModelProvider extends ICompletionModelProvider {
       placeHolder: "Select a completion model",
       ignoreFocusOut: true,
       canPickMany: false,
-      title: "Flexpilot: Select the completion model",
+      title: "CodeArt: Select the completion model",
     });
     if (!model) {
       throw new Error("User cancelled model selection");
@@ -278,7 +278,7 @@ export class OpenAICompletionModelProvider extends ICompletionModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {
@@ -409,7 +409,7 @@ export class OpenAIChatModelProvider extends IChatModelProvider {
     const modelsList = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: true,
       },
       async (progress) => {
@@ -461,7 +461,7 @@ export class OpenAIChatModelProvider extends IChatModelProvider {
       {
         placeHolder: "Select a chat model",
         ignoreFocusOut: true,
-        title: "Flexpilot: Select the chat model",
+        title: "CodeArt: Select the chat model",
       },
     );
     if (model === undefined) {
@@ -472,7 +472,7 @@ export class OpenAIChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {

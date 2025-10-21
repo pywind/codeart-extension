@@ -24,7 +24,7 @@ interface IGoogleModel {
 }
 
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/google-gemini.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * Google Generative AI Chat Model Provider class
@@ -74,7 +74,7 @@ export class GoogleChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: "e.g., A123SyBMH486BbQe684JHG2ASZ2-RKmmVe-X11M", // cspell:disable-line
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter your Google Generative AI API key",
+      title: "CodeArt: Enter your Google Generative AI API key",
     });
     if (apiKey === undefined) {
       throw new Error("User cancelled API key input");
@@ -89,7 +89,7 @@ export class GoogleChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: `e.g., ${defaultBaseUrl}`,
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter the base URL for Google Generative AI",
+      title: "CodeArt: Enter the base URL for Google Generative AI",
     });
     if (baseUrl === undefined) {
       throw new Error("User cancelled base URL input");
@@ -100,7 +100,7 @@ export class GoogleChatModelProvider extends IChatModelProvider {
     const response = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: true,
       },
       async (progress) => {
@@ -127,7 +127,7 @@ export class GoogleChatModelProvider extends IChatModelProvider {
     const model = await vscode.window.showQuickPick(modelPickUpItems, {
       placeHolder: "Select a chat model",
       ignoreFocusOut: true,
-      title: "Flexpilot: Select the Google Generative AI model",
+      title: "CodeArt: Select the Google Generative AI model",
     });
     if (model === undefined) {
       throw new Error("User cancelled model selection");
@@ -137,7 +137,7 @@ export class GoogleChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {

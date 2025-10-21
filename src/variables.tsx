@@ -64,7 +64,7 @@ export class VariablesManager {
       logger.debug(`Registering chat variable: ${variable.name}`);
       extensionContext.subscriptions.push(
         vscode.chat.registerChatVariableResolver(
-          `flexpilot.${variable.name}`,
+          `codeart.${variable.name}`,
           variable.name,
           variable.description,
           variable.description,

@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import * as vscode from "vscode";
 
 /**
- * LoggerSingleton class provides a centralized logging mechanism for the Flexpilot VS Code extension.
+ * LoggerSingleton class provides a centralized logging mechanism for the CodeArt VS Code extension.
  * It implements the Singleton pattern to ensure a single instance of the logger across the application.
  */
 export class LoggerSingleton extends vscode.Disposable {
@@ -23,14 +23,13 @@ export class LoggerSingleton extends vscode.Disposable {
     });
 
     // Create the output channel
-    this.outputChannel = vscode.window.createOutputChannel("Flexpilot", {
+    this.outputChannel = vscode.window.createOutputChannel("CodeArt", {
       log: true,
     });
 
     // Register the command to view logs
-    this.disposable = vscode.commands.registerCommand(
-      "flexpilot.viewLogs",
-      () => this.outputChannel.show(),
+    this.disposable = vscode.commands.registerCommand("codeart.viewLogs", () =>
+      this.outputChannel.show(),
     );
   }
 
@@ -71,7 +70,7 @@ export class LoggerSingleton extends vscode.Disposable {
       .then(async (selection) => {
         if (selection === "Open Docs") {
           vscode.env.openExternal(
-            vscode.Uri.parse("https://docs.flexpilot.ai/"),
+            vscode.Uri.parse("https://github.com/pywind/codeart-extension"),
           );
         }
       });

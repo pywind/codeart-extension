@@ -27,7 +27,7 @@ export class StatusIconMenuCommand {
     // Register the command
     extensionContext.subscriptions.push(
       vscode.commands.registerCommand(
-        "flexpilot.status.icon.menu",
+        "codeart.status.icon.menu",
         this.handler.bind(this),
       ),
     );
@@ -56,7 +56,7 @@ export class StatusIconMenuCommand {
       const selectedMenu = await vscode.window.showQuickPick(menuItems, {
         placeHolder: "Select an option",
         ignoreFocusOut: true,
-        title: "Flexpilot Completions Menu",
+        title: "CodeArt Completions Menu",
       });
 
       if (selectedMenu?.handler) {
@@ -103,12 +103,12 @@ export class StatusIconMenuCommand {
   private createStatusMenuItem(): ICustomQuickPickItem {
     if (!storage.usage.get("Inline Completion")) {
       return {
-        label: "$(flexpilot-default) Status: Inline Completion Not Configured",
+        label: "$(codeart-default) Status: Inline Completion Not Configured",
       };
     }
     return statusIcon.state === "disabled"
-      ? { label: "$(flexpilot-default) Status: Disabled" }
-      : { label: "$(flexpilot-default) Status: Ready" };
+      ? { label: "$(codeart-default) Status: Disabled" }
+      : { label: "$(codeart-default) Status: Ready" };
   }
 
   /**
@@ -130,12 +130,12 @@ export class StatusIconMenuCommand {
         handler: async () => {
           vscode.commands.executeCommand(
             "workbench.action.openSettings",
-            "flexpilot",
+            "codeart",
           );
         },
       },
       {
-        label: "$(chat-editor-label-icon) Open Flexpilot Chat",
+        label: "$(chat-editor-label-icon) Open CodeArt Chat",
         handler: async () => {
           vscode.commands.executeCommand(
             "workbench.panel.chat.view.copilot.focus",
@@ -143,10 +143,11 @@ export class StatusIconMenuCommand {
         },
       },
       {
-        label: "$(remote-explorer-documentation) View Flexpilot Docs...",
-        handler: async () => {
+        label: "$(remote-explorer-documentation) View CodeArt Docs...",
+        detail: "Open CodeArt documentation",
+        action: () => {
           vscode.env.openExternal(
-            vscode.Uri.parse("https://docs.flexpilot.ai"),
+            vscode.Uri.parse("https://github.com/pywind/codeart-extension"),
           );
         },
       },

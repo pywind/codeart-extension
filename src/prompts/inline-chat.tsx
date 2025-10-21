@@ -14,7 +14,7 @@ import { VariablesManager } from "../variables";
 export class InlineChatPrompt {
   private readonly history: { request: string; response: string }[];
   public readonly editor: vscode.TextEditor;
-  private readonly participant = "flexpilot.editor.default";
+  private readonly participant = "codeart.editor.default";
 
   /**
    * Constructs an InlineChatPrompt instance.
@@ -69,7 +69,7 @@ export class InlineChatPrompt {
       <Message role="system">
         <ul>
           <li>
-            You're a skilled programmer named "Flexpilot" assisting a fellow
+            You're a skilled programmer named "CodeArt" assisting a fellow
             developer in revising a code snippet.
           </li>
           <li>

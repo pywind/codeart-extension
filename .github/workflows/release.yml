@@ -81,18 +81,18 @@ jobs:
         run: npm run package -- --target ${{ matrix.platform }}
 
       - name: Package extension
-        run: npx vsce package --target ${{ matrix.platform }} --out "flexpilot-${{ matrix.platform }}.vsix"
+        run: npx vsce package --target ${{ matrix.platform }} --out "codeart-${{ matrix.platform }}.vsix"
 
       - name: Upload extension vsix as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "flexpilot-${{ matrix.platform }}.vsix"
-          path: "flexpilot-${{ matrix.platform }}.vsix"
+          name: "codeart-${{ matrix.platform }}.vsix"
+          path: "codeart-${{ matrix.platform }}.vsix"
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v2
         with:
-          files: "flexpilot-${{ matrix.platform }}.vsix"
+          files: "codeart-${{ matrix.platform }}.vsix"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -103,4 +103,4 @@ jobs:
           max_attempts: 6
           retry_on: error
           retry_wait_seconds: 10
-          command: npx vsce publish --packagePath "flexpilot-${{ matrix.platform }}.vsix" -p ${{ secrets.VSCODE_MARKETPLACE_TOKEN }}
+          command: npx vsce publish --packagePath "codeart-${{ matrix.platform }}.vsix" -p ${{ secrets.VSCODE_MARKETPLACE_TOKEN }}

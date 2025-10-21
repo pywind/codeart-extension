@@ -97,7 +97,7 @@ class InlineCompletionProvider implements vscode.InlineCompletionItemProvider {
         } finally {
           statusIcon.reset();
         }
-      }, storage.workspace.get<number>("flexpilot.completions.debounceWait"));
+      }, storage.workspace.get<number>("codeart.completions.debounceWait"));
 
       token.onCancellationRequested(() => {
         clearTimeout(timeoutId);
@@ -140,7 +140,7 @@ class InlineCompletionProvider implements vscode.InlineCompletionItemProvider {
     // Limit the number of tokens for prompt
     const promptTokenLimit =
       Math.min(
-        storage.workspace.get<number>("flexpilot.completions.maxTokenUsage"),
+        storage.workspace.get<number>("codeart.completions.maxTokenUsage"),
         provider.config.contextWindow,
       ) - this.maxOutputTokens;
 
@@ -188,7 +188,7 @@ class InlineCompletionProvider implements vscode.InlineCompletionItemProvider {
     const maxPrefixLength =
       Math.floor(
         storage.workspace.get<number>(
-          "flexpilot.completions.contextPrefixWeight",
+          "codeart.completions.contextPrefixWeight",
         ) * promptTokenLimit,
       ) - headerTokens.length;
     const maxSuffixLength =
@@ -244,7 +244,7 @@ class InlineCompletionProvider implements vscode.InlineCompletionItemProvider {
       stop: stop,
       signal: abortController.signal,
       temperature: storage.workspace.get<number>(
-        "flexpilot.completions.temperature",
+        "codeart.completions.temperature",
       ),
       messages: {
         suffix: suffix.trimEnd(),

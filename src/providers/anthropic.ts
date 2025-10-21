@@ -17,7 +17,7 @@ interface IAnthropicChatModelConfig extends IModelConfig {
  * Default help prompt for Anthropic API key configuration
  */
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/anthropic.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * Anthropic Chat Model Provider class
@@ -64,7 +64,7 @@ export class AnthropicChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: "e.g., sk-ant-api03-qojTF59pEBxB7DZ...", // cspell:disable-line
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter your Anthropic API key",
+      title: "CodeArt: Enter your Anthropic API key",
     });
     if (apiKey === undefined) {
       throw new Error("User cancelled API key input");
@@ -79,7 +79,7 @@ export class AnthropicChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: `e.g., ${defaultBaseUrl}`,
       prompt: DEFAULT_HELP_PROMPT,
-      title: "Flexpilot: Enter the base URL for Anthropic API",
+      title: "CodeArt: Enter the base URL for Anthropic API",
     });
     if (baseUrl === undefined) {
       throw new Error("User cancelled base URL input");
@@ -94,7 +94,7 @@ export class AnthropicChatModelProvider extends IChatModelProvider {
       valueSelection: [0, 0],
       placeHolder: `e.g., ${defaultModel}`,
       prompt: "Enter the model name",
-      title: "Flexpilot: Enter the Anthropic API model name",
+      title: "CodeArt: Enter the Anthropic API model name",
     });
     if (model === undefined) {
       throw new Error("User cancelled model input");
@@ -105,7 +105,7 @@ export class AnthropicChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {

@@ -35,7 +35,7 @@ interface IAzureOpenAICompletionModelConfig extends ICompletionModelConfig {
  * Default help prompt for Azure OpenAI configuration.
  */
 const DEFAULT_HELP_PROMPT =
-  "Click [here](https://docs.flexpilot.ai/model-providers/azure-openai.html) for more information";
+  "Click [here](https://github.com/pywind/codeart-extension) for more information";
 
 /**
  * Prompts the user to input their Azure OpenAI API key.
@@ -46,7 +46,7 @@ const DEFAULT_HELP_PROMPT =
 const getApiKeyInput = async (apiKey?: string): Promise<string> => {
   logger.debug("Prompting user for Azure OpenAI API key");
   const newApiKey = await vscode.window.showInputBox({
-    title: "Flexpilot: Enter your Azure OpenAI API key",
+    title: "CodeArt: Enter your Azure OpenAI API key",
     ignoreFocusOut: true,
     value: apiKey ?? "",
     validateInput: (value) =>
@@ -79,7 +79,7 @@ const getBaseUrlInput = async (baseUrl?: string): Promise<string> => {
       !value?.trim() ? "Base URL cannot be empty" : undefined,
     valueSelection: [0, 0],
     prompt: DEFAULT_HELP_PROMPT,
-    title: "Flexpilot: Enter your Azure OpenAI base URL",
+    title: "CodeArt: Enter your Azure OpenAI base URL",
   });
   if (newBaseUrl === undefined) {
     throw new Error("User cancelled Azure OpenAI base URL input");
@@ -171,7 +171,7 @@ export class AzureOpenAICompletionModelProvider extends ICompletionModelProvider
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {
@@ -303,7 +303,7 @@ export class AzureOpenAIChatModelProvider extends IChatModelProvider {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Flexpilot",
+        title: "CodeArt",
         cancellable: false,
       },
       async (progress) => {
